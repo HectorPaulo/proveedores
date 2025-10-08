@@ -5,8 +5,8 @@ const LandingPage = () => {
 
     return (
         <section>
-            <div className="max-w-screen mx-auto px-4 text-gray-500 overflow-hidden md:px-8 md:flex">
-                <div className="flex-none space-y-5 max-w-xl">
+            <div className="max-w-screen mx-auto px-4 text-gray-500 overflow-hidden md:px-8 flex items-center">
+                <div className="flex-none space-y-5 max-w-xl mx-auto text-center md:text-left">
                     <h1 className="text-4xl text-gray-300 sm:text-5xl font-semibold">
                         Conecta con <label className="text-orange-400 font-extrabold"><strong>proveedores de calidad</strong></label>
                     </h1>
@@ -38,7 +38,7 @@ const LandingPage = () => {
                 <div className="flex-1 hidden md:block">
                     <img
                         src="/src/assets/img-inicio-3.svg"
-                        className="max-w-full h-auto"
+                        className="max-w-2/3 h-auto"
                     />
                 </div>
             </div>
