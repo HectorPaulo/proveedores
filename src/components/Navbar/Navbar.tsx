@@ -102,8 +102,8 @@ const Navbar = () => {
                         </ul>
                         <button
                         onClick={() => navigate('/login')} 
-                        className="btn-shine inline-flex border-0 items-center justify-center w-28 h-12 gap-x-1 py-2 px-4 font-semibold text-md rounded-lg bg-gradient-to-r from-amber-500 to-orange-600 cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out shadow-lg shadow-amber-500/20 hover:shadow-orange-600/20">
-                            <span className='font-black'>Login</span>
+                        className="btn-shine inline-flex border-white border-t-2 border-l-2 border-b-4 border-r-4 items-center justify-center w-28 h-12 gap-x-1 py-2 px-4 font-semibold text-md rounded-lg bg-gradient-to-r from-amber-500 to-orange-600 cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out shadow-lg shadow-amber-500/60 hover:shadow-orange-600/60">
+                            <span className='font-black text-lg'>Login</span>
                         </button>
                     </div>
                 </div>
