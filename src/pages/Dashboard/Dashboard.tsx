@@ -1,44 +1,14 @@
 import React from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import Header from "../../components/Header/Header.tsx";
+import Sidebar from "../../components/Sidebar/Sidebar.tsx";
 
 const Dashboard: React.FC = () => {
-    const { user, logout } = useAuth();
-    const navigate = useNavigate();
-
-    const handleLogout = () => {
-        logout();
-        navigate('/');
-    };
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Header */}
-            <header className="bg-white shadow">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center py-6">
-                        <div className="flex items-center space-x-4">
-                            <img
-                                src='/src/assets/logo.png'
-                                alt="Logo"
-                                className="w-10 h-10 object-cover rounded-full"
-                            />
-                            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-                        </div>
-                        <div className="flex items-center space-x-4">
-                            <span className="text-gray-700">Bienvenido, {user?.name}</span>
-                            <button
-                                onClick={handleLogout}
-                                className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-200"
-                            >
-                                Cerrar Sesión
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </header>
+            <Header />
+            <Sidebar />
 
-            {/* Main Content */}
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {/* Card 1 */}
@@ -70,9 +40,8 @@ const Dashboard: React.FC = () => {
                                 </div>
                             </div>
                             <div className="ml-4">
-                                <h3 className="text-lg font-semibold text-gray-900">Contratos</h3>
+                                <h3 className="text-lg font-semibold text-gray-900">Productos</h3>
                                 <p className="text-3xl font-bold text-green-600">89</p>
-                                <p className="text-sm text-gray-500">Completados este mes</p>
                             </div>
                         </div>
                     </div>
@@ -88,9 +57,9 @@ const Dashboard: React.FC = () => {
                                 </div>
                             </div>
                             <div className="ml-4">
-                                <h3 className="text-lg font-semibold text-gray-900">Ingresos</h3>
-                                <p className="text-3xl font-bold text-yellow-600">$124.5K</p>
-                                <p className="text-sm text-gray-500">Generados este mes</p>
+                                <h3 className="text-lg font-semibold text-gray-900">Satisfacción del cliente</h3>
+                                <p className="text-3xl font-bold text-yellow-600">98%</p>
+                                <p className="text-sm text-gray-500">de satisfacción</p>
                             </div>
                         </div>
                     </div>

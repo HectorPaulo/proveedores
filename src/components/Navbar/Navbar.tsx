@@ -23,7 +23,7 @@ const Navbar = () => {
 
     const Brand = () => (
         <div className="flex items-center justify-between py-5 md:block">
-            <a href="javascript:void(0)" onClick={() => navigate('/')}>
+            <a href="/" onClick={() => navigate('/')}>
                 <img
                 src="/src/assets/logo.png"
                     width={120}
@@ -88,7 +88,7 @@ const Navbar = () => {
                                 return (
                                     <li
                                         key={idx}
-                                        className="text-gray-300 hover:text-gray-900 mx-12"
+                                        className="text-gray-300 hover:text-amber-600 hover:scale-105 mx-12"
                                     >
                                         <a href={item.path} className="block" onClick={(e) => {
                                             e.preventDefault();

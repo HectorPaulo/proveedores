@@ -6,7 +6,6 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -16,19 +15,15 @@
 
 a {
   font-weight: 500;
-  color: #fff;
   text-decoration: inherit;
 }
-a:hover {
-  color: #ff9b00;
-}
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: #e0e0e0;
+    background-color: #181818;
   }
   a:hover {
-    color: #747bff;
+    color: #a8b1ff;
   }
 }
