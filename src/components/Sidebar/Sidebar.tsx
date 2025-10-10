@@ -23,13 +23,13 @@ const Sidebar = () => {
     }
 
     const options = [
-        { title: user?.name, icon: <AccountCircleRoundedIcon className="text-gray-600 cursor-pointer hover:text-gray-800 mr-2" />, action: () => navigate('/private/profile') },
-        { title: darkMode ? 'Modo claro' : 'Modo oscuro', icon: <DarkModeRoundedIcon className="text-gray-600 cursor-pointer hover:text-gray-800 mr-2" />, action: toggleDarkMode },
-        { title: 'Cerrar sesión', icon: <LogoutRoundedIcon className="text-red-700 cursor-pointer hover:text-red-900 mr-2"/>, action: handleLogout },
+        { title: user?.name, icon: <AccountCircleRoundedIcon sx={{ fontSize: 32 }} />, action: () => navigate('/private/profile') },
+        { title: darkMode ? 'Modo claro' : 'Modo oscuro', icon: <DarkModeRoundedIcon className="ml-2" sx={{ fontSize: 32 }} />, action: toggleDarkMode },
+        { title: 'Cerrar sesión', icon: <LogoutRoundedIcon className="ml-4" sx={{ fontSize: 32 }} />, action: handleLogout },
     ]
 
     return (
-        <aside className={`p-4 w-1/5 h-screen fixed top-0 left-0 bg-white border-r-[1px] border-gray-200 ${menuHidden ? 'translate-x-[-80%]' : 'translate-x-0'} transition-transform duration-300 ease-in-out z-50`}>
+        <aside className={`p-4 w-1/6 h-screen fixed top-0 left-0 bg-[#181818] border-r-[1px] border-gray-700 ${menuHidden ? 'translate-x-[-80%]' : 'translate-x-0'} transition-transform duration-300 ease-in-out z-50 p-0`}>
             <div className="flex items-center space-x-4 max-h-80">
                 <img
                     src='/src/assets/logo.png'
@@ -41,33 +41,23 @@ const Sidebar = () => {
                     onClick={() => setMenuHidden(!menuHidden)}
                 />
             </div>
-            <div>
-                <ul className="space-y-16 mt-8">
-                    <li className=" hover:text-gray-900">
-                        <a href="javascript:void(0)" className="block">
-                            <span className="inline-block w-4 h-4 mr-2 rounded-full"></span>
-                            <span>Inicio</span>
-                        </a>
-                    </li>
-                    <li className="text-gray-300 hover:text-gray-900">
-                        <a href="javascript:void(0)" className="block">
-                            <span>A cerca de</span>
-                            <span className="inline-block w-4 h-4 mr-2 rounded-full"></span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div className="flex flex-col items-center justify-center mt-8 space-y-4">
+            <div className=" h-2/3 flex flex-col mt-8">
                 <ul>
                     {options.map((item, idx) => {
                         return (
                             <li key={idx}>
                                 <button
-                                    className="cursor-pointer hover:text-gray-800 font-semibold text-gray-700 hover:scale-105"
+                                    className="my-8 cursor-pointer hover:text-gray-800 font-semibold text-gray-700 hover:scale-105"
                                     onClick={item.action}
                                 >
-                                    {item.title}
-                                    {item.icon}
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-right text-lg">
+                                            {item.title}
+                                        </span>
+                                        <span className="text-right text-lg ml-16">
+                                            {item.icon}
+                                        </span>
+                                    </div>
                                 </button>
                             </li>
                         );
