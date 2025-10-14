@@ -23,7 +23,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         if (email === 'admin@proveedores.com' && password === 'admin123') {
             const userData: User = {
                 id: '1',
-                name: 'Administrador',
+                name: 'Peblo',
                 email: email
             };
 

@@ -108,6 +108,8 @@ const Dashboard: React.FC = () => {
                             </div>
 
                         </div>
+
+                        <hr className="mt-10 h-[1px]"/>
                     </div>
                 </div>
             </main>
