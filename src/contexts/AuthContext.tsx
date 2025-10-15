@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { ReactNode } from 'react';
-import { AuthContext } from './AuthContextTypes';
-import type { User } from './AuthContextTypes';
+import { AuthContextTypes } from './AuthContextTypes.tsx';
+import type { User } from './AuthContextTypes.tsx';
 
 interface AuthProviderProps {
     children: ReactNode;
@@ -50,5 +50,5 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         logout
     };
 
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+    return <AuthContextTypes.Provider value={value}>{children}</AuthContextTypes.Provider>;
 };

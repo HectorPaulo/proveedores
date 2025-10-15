@@ -8,6 +8,7 @@ import Contact from "./pages/Contact/Contact.tsx";
 import Team from "./pages/Team/Team.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
+import Providers from "./pages/Providers/Providers.tsx";
 
 function App() {
   return (
@@ -27,6 +28,14 @@ function App() {
               </ProtectedRoute>
             }
           />
+            <Route
+                path="/private/proveedores"
+                element={
+                    <ProtectedRoute>
+                        <Providers />
+                    </ProtectedRoute>
+                }
+            />
         </Routes>
       </Router>
     </AuthProvider>
