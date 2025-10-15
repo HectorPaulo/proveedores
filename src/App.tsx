@@ -20,7 +20,7 @@ function App() {
           <Route path="/team" element={<Team />} />
           <Route path="/login" element={<Login />} />
           <Route
-            path="/dashboard"
+            path="/private/dashboard"
             element={
               <ProtectedRoute>
                 <Dashboard />

@@ -1,19 +1,20 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import MenuBottomOptions from "./MenuBottomOptions/MenuBottomOptions.tsx";
+import Tooltip from '@mui/material/Tooltip';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import HailIcon from '@mui/icons-material/Hail';
 
 const Sidebar = () => {
-    const [menuHidden, setMenuHidden] = useState(false);
+    const [menuHidden, setMenuHidden] = useState(true);
     const navigate = useNavigate();
 
     const options = [
-        { title: 'Inicio', icon: <HomeRoundedIcon />, path: '/dashboard' },
-        { title: 'Proveedores', icon: <HailIcon />, path: '/private/proveedores' },
-        { title: 'Favoritos', icon: <FavoriteRoundedIcon />, path: '/private/favorites' },
+        { title: 'Inicio', icon: <HomeRoundedIcon />, path: '/private/dashboard', tooltip: 'Inicio' },
+        { title: 'Proveedores', icon: <HailIcon />, path: '/private/proveedores', tooltip: 'Buscar proveedores' },
+        { title: 'Favoritos', icon: <FavoriteRoundedIcon />, path: '/private/favorites', tooltip: 'Consultar favoritos' },
     ]
 
     return (
@@ -34,19 +35,21 @@ const Sidebar = () => {
                     {options.map((item, idx) => {
                         return (
                             <li key={idx}>
-                                <button
-                                    className="my-8 cursor-pointer hover:text-gray-800 font-semibold hover:scale-105 w-full"
-                                    onClick={() => navigate(item.path)}
-                                >
-                                    <div className="flex items-center justify-between w-full">
-                                        <span className="text-left text-lg">
-                                            {item.title}
-                                        </span>
-                                        <span className="text-right text-lg">
-                                            {item.icon}
-                                        </span>
-                                    </div>
-                                </button>
+                                <Tooltip title={item.tooltip} placement="right" arrow>
+                                    <button
+                                        className="my-8 cursor-pointer hover:text-gray-800 font-semibold hover:scale-105 w-full"
+                                        onClick={() => navigate(item.path)}
+                                    >
+                                        <div className="flex items-center justify-between w-full">
+                                            <span className="text-left text-lg">
+                                                {item.title}
+                                            </span>
+                                            <span className="text-right text-lg">
+                                                {item.icon}
+                                            </span>
+                                        </div>
+                                    </button>
+                                </Tooltip>
                             </li>
                         );
                     })}

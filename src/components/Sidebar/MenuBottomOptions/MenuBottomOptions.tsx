@@ -68,7 +68,7 @@ const MenuBottomOptions = () => {
                         {options.map((item, idx) => (
                             <li key={idx} className="w-full">
                                 <button
-                                    className="flex items-center gap-3 w-full px-3 py-2 rounded hover:bg-gray-700 transition-colors"
+                                    className="flex items-center gap-3 w-full px-3 py-2 rounded hover:bg-gray-950 transition-colors cursor-pointer"
                                     onClick={() => {
                                         item.action();
                                         setIsModalOpen(false);

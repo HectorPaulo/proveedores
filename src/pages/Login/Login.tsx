@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import RemoveRedEyeRoundedIcon from '@mui/icons-material/RemoveRedEyeRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -38,7 +38,7 @@ const Login: React.FC = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/dashboard');
+            navigate('/private/dashboard');
         }
     }, [isAuthenticated, navigate]);
 

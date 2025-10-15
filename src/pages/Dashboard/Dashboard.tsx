@@ -109,10 +109,20 @@ const Dashboard: React.FC = () => {
 
                         </div>
 
-                        <hr className="mt-10 h-[1px]"/>
                     </div>
                 </div>
             </main>
+                        <div className="mt-8 block w-full h-[300px] bg-[#080808] border-t-2 border-gray-950">
+                            <div className="flex flex-col justify-center h-full gap-y-4 py-4">
+                                <label className="text-4xl font-black">¿Eres un proveedor?</label>
+                                <label>Únete a nuestra plataforma y conecta con miles de compradores potenciales</label>
+                                <div className="flex flex-row justify-center">
+                                    <button className="rounded border px-4 py-2 mx-6 bg-amber-600 font-semibold">Registrarme como proveedor</button>
+                                    <button className="rounded border px-4 py-2 mx-6 bg-gray-800 font-semibold">Ver mis favoritos</button>
+                                </div>
+                            </div>
+
+                        </div>
         </div>
     );
 };
