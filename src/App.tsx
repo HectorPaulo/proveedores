@@ -9,6 +9,7 @@ import Team from "./pages/Team/Team.tsx";
 import Login from "./pages/Login/Login.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Providers from "./pages/Providers/Providers.tsx";
+import Favorites from "./pages/Favorites/Favorites.tsx";
 
 function App() {
   return (
@@ -34,6 +35,14 @@ function App() {
                     <ProtectedRoute>
                         <Providers />
                     </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/private/favorites"
+                element={
+                <ProtectedRoute>
+                    <Favorites />
+                </ProtectedRoute>
                 }
             />
         </Routes>
