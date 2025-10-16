@@ -10,6 +10,7 @@ import Login from "./pages/Login/Login.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import Providers from "./pages/Providers/Providers.tsx";
 import Favorites from "./pages/Favorites/Favorites.tsx";
+import ProductDetail from "./pages/ProductDetail/ProductDetail.tsx";
 
 function App() {
   return (
@@ -42,6 +43,14 @@ function App() {
                 element={
                 <ProtectedRoute>
                     <Favorites />
+                </ProtectedRoute>
+                }
+            />
+            <Route
+                path={`/private/proveedores/:id/:nombre`}
+                element={
+                <ProtectedRoute>
+                    <ProductDetail />
                 </ProtectedRoute>
                 }
             />

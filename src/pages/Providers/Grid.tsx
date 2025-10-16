@@ -2,9 +2,10 @@ import type Provider from "../../interfaces/Provider.ts";
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import LocalPhoneRoundedIcon from '@mui/icons-material/LocalPhoneRounded';
+import {useNavigate} from "react-router-dom";
 
 const Grid = () => {
-
+    const navigate = useNavigate();
     const proveedores: Provider[] = [
         {
             id: 1, nombre: "Café Premium Los Andes", verificado: true, tipo: "Agrícola", descripcion: "Café arábica de altura", ubicacion: "Medellín, Antioquia", telefono: "+57 300 123 4567", compraMinima: "50kg", calificacion: 5, email: "ventas@cafepremiumlosandes.com", horario: "Lunes a Viernes: 8:00 AM - 6:00 PM Sábados: 8:00 AM - 2:00 PM", productos: [
@@ -106,7 +107,9 @@ const Grid = () => {
                     {
                         proveedores.flatMap((proveedor) =>
                             proveedor.productos.map((producto, idx) => (
-                                <div key={`${proveedor.id}-${idx}`} className="rounded-lg shadow-md border border-gray-700 cursor-pointer hover:shadow-lg transition-shadow duration-300 hover:scale-105">
+                                <div key={`${proveedor.id}-${idx}`}
+                                     onClick={() => navigate(`/private/proveedores/${proveedor.id}/${producto.nombre}`, { state: { proveedor, producto } })}
+                                     className="rounded-lg shadow-md border border-gray-700 cursor-pointer hover:shadow-lg transition-shadow duration-300 hover:scale-105">
                                     <div className="flex flex-row">
                                         <img src={producto.imagen} alt={producto.nombre} className="w-1/3 object-cover rounded-tl-lg rounded-bl-lg mr-4" />
                                         <div className="flex flex-col p-2">
