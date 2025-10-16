@@ -1,9 +1,10 @@
 import React from 'react';
 import Header from "../../components/Header/Header.tsx";
 import Sidebar from "../../components/Sidebar/Sidebar.tsx";
+import {useNavigate} from "react-router-dom";
 
 const Dashboard: React.FC = () => {
-
+    const navigate = useNavigate();
     return (
         <div className="min-h-screen">
             <Header />
@@ -117,8 +118,8 @@ const Dashboard: React.FC = () => {
                                 <label className="text-4xl font-black">¿Eres un proveedor?</label>
                                 <label>Únete a nuestra plataforma y conecta con miles de compradores potenciales</label>
                                 <div className="flex flex-row justify-center">
-                                    <button className="rounded border px-4 py-2 mx-6 bg-amber-600 font-semibold">Registrarme como proveedor</button>
-                                    <button className="rounded border px-4 py-2 mx-6 bg-gray-800 font-semibold">Ver mis favoritos</button>
+                                    <button onClick={() => navigate('/private/registro-proveedor')} className="cursor-pointer hover:scale-105 rounded border px-4 py-2 mx-6 bg-amber-600 font-semibold">Registrarme como proveedor</button>
+                                    <button onClick={() => navigate('/private/favorites')} className="cursor-pointer hover:scale-105 rounded border px-4 py-2 mx-6 bg-gray-800 font-semibold">Ver mis favoritos</button>
                                 </div>
                             </div>
 
