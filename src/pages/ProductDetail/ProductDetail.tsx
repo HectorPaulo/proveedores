@@ -9,11 +9,16 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import type Product from "../../interfaces/Product.ts";
+import {useState} from "react";
 
 const ProductDetail = () => {
     useParams();
     const { state } = useLocation();
     const { proveedor, producto } = state || {};
+    const [hovered, setHovered] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(false);
 
     return (
         <>
@@ -25,7 +30,17 @@ const ProductDetail = () => {
                             <h1 className="font-bold text-3xl">{proveedor.nombre}</h1>
                             <p className="text-gray-400">{producto.nombre}</p>
                         </div>
-                        <FavoriteBorderRoundedIcon className="absolute right-10 top-10 cursor-pointer" />
+                        <div className="absolute right-10 top-10 cursor-pointer hover:scale-110"
+                        onMouseEnter={() => setHovered(true)}
+                        onMouseLeave={() => setHovered(false)}
+                             onClick={() => setIsFavorite(!isFavorite)}
+                        >
+                            { hovered || isFavorite ? (
+                                <FavoriteIcon className={ isFavorite ? "text-red-500" : "" } />
+                            ) : (
+                                <FavoriteBorderRoundedIcon />
+                            ) }
+                        </div>
                     </div>
                 </div>
             </header>
@@ -86,7 +101,7 @@ const ProductDetail = () => {
 
                         <div className="flex flex-col justify-start items-start gap-y-4 rounded-lg border-[1px] border-gray-300 p-4 my-6 w-full">
                             <h1 className="font-bold text-2xl">Productos y precios</h1>
-                            {proveedor.productos.map((producto, index) => (
+                            {proveedor.productos.map((producto: Product, index: number) => (
                                 <div key={index} className="flex flex-row justify-start items-start gap-x-4 bg-[#1e1e1e] px-4 py-2 rounded-lg w-full">
                                     <img src={producto.imagen} alt={producto.nombre} className="w-16 h-16 object-cover rounded-lg" />
                                     <div className="flex flex-row gap-x-4">
