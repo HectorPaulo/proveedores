@@ -15,59 +15,80 @@ The React Compiler is not enabled on this template because of its impact on dev 
 
 If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-```js
+````js
 export default defineConfig([
   globalIgnores(['dist']),
   {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+    # Proveedores — Aplicación de Gestión de Proveedores
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+    Este repositorio contiene una aplicación web frontend construida con React + TypeScript y Vite destinada a gestionar proveedores, catálogos y procesos relacionados (registro, checkout, panel administrativo y páginas públicas).
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+    El proyecto es una interfaz moderna que incluye autenticación, un dashboard protegido, navegación responsive y componentes reutilizables (Sidebar, Navbar, Layouts, etc.).
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+    ## Funcionalidad principal
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+    - Registro y administración de proveedores.
+    - Proceso de checkout para registrar productos/servicios.
+    - Panel de control (dashboard) para usuarios autenticados.
+    - Páginas públicas: Inicio, Acerca de, Contacto, Equipo.
+    - Tema claro/oscuro con toggler.
+    - Componentes accesibles y listos para integrarse con APIs.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+    ## Estructura del proyecto (resumen)
+
+    - `src/` – código fuente React + TypeScript
+      - `components/` – componentes UI (Navbar, Sidebar, Header, GridShape, etc.)
+      - `pages/` – páginas por ruta (Home, Login, Dashboard, RegistroProveedor, etc.)
+      - `contexts/` – contexto de autenticación y tipos
+      - `hooks/` – hooks personalizados (por ejemplo `useAuth`)
+      - `assets/` – imágenes y SVGs
+      - `main.tsx` – punto de entrada
+
+    ## Tecnologías
+
+    - React 18 + TypeScript
+    - Vite (dev server y bundling)
+    - Material UI (MUI) para componentes y SvgIcon
+    - Tailwind CSS para utilidades de estilo (clases en componentes)
+    - ESLint + Prettier (configuración básica en el template)
+
+    ## Ejecutar en desarrollo
+
+    1. Instalar dependencias:
+
+    ```bash
+    # PowerShell / Windows
+    npm install
+    ```
+
+    2. Iniciar el servidor de desarrollo:
+
+    ```bash
+    npm run dev
+    ```
+
+    3. Abrir el navegador en `http://localhost:5173` (o la URL que Vite muestre).
+
+    ## Build para producción
+
+    ```bash
+    npm run build
+    npm run preview
+    ```
+
+    ## Notas y recomendaciones
+
+    - Si hay errores de parsing en Vite relacionados con archivos `.js` que contienen JSX, renómbralos a `.jsx` o apunta las importaciones a `.tsx` cuando exista una versión TypeScript del componente.
+    - El componente `src/components/IconUsage/IconUsage.tsx` proporciona una versión válida del icono; si existe un `IconUsage.js` con contenido corrupto, reemplázalo o elimínalo y actualiza las importaciones.
+    - Ejecuta `npm run lint` y `npm run typecheck` si quieres revisar problemas de tipado y linting antes de hacer PRs.
+
+    ## Contribuir
+
+    1. Crea una rama feature/fix desde `main`.
+    2. Añade pruebas pequeñas si cambias lógica crítica.
+    3. Asegúrate de que el linter y el compilador TypeScript pasan antes de abrir un PR.
+
+    ## Contacto
+
+    Si necesitas ayuda con la integración backend, autenticación o despliegue, comparte los detalles y puedo ayudar a incorporar la API o configurar pipelines de CI/CD.
+````

@@ -15,4 +15,5 @@ export default interface Provider {
     opiniones?: Opinion[];
     productos: Product[];
     horario: string;
+    metodosPago: string[];
 }

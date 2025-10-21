@@ -1,25 +1,21 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
 import Typography from '@mui/material/Typography';
-import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import AddressForm from "../../components/AddressForm/AddressForm";
 import PaymentForm from "../../components/PaymentForm/PaymentForm";
 import Review from "../../components/Review/Review";
 import AppTheme from "../../components/SharedTheme/AppTheme";
 import ColorModeIconDropdown from "../../components/SharedTheme/ColorModelIconDropdown";
-import SitemarkIcon from "../../components/IconUsage/IconUsage.tsx";
-import Info from "../../components/Info/Info.jsx";
-import InfoMobile from "../../components/InfoMobile/InfoMobile.tsx";
+import StepLabel from '@mui/material/StepLabel';
+import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
+import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import GridShape from "../../components/GridShape/GridShape.tsx";
 
 const steps = ['Información del proveedor', 'Información de productos', 'Detalles y preferencias'];
 function getStepContent(step: number) {
@@ -57,13 +53,14 @@ export function Checkout(props: { disableCustomTheme?: boolean }) {
                         sm: 'calc(100dvh - var(--template-frame-height, 0px))',
                     },
                     mt: {
-                        xs: 4,
+                        xs: 0,
+                        md: 0,
                         sm: 0,
                     },
                 }}
             >
                 <Grid
-                    size={{ xs: 12, sm: 5, lg: 4 }}
+                    size={{ sm: 12, md: 5, lg: 4 }}
                     sx={{
                         display: { xs: 'none', md: 'flex' },
                         flexDirection: 'column',
@@ -71,19 +68,17 @@ export function Checkout(props: { disableCustomTheme?: boolean }) {
                         borderRight: { sm: 'none', md: '1px solid' },
                         borderColor: { sm: 'none', md: 'divider' },
                         alignItems: 'start',
-                        pt: 16,
-                        px: 10,
-                        gap: 4,
+                        gap: 0,
                     }}
                 >
                     <div className='flex flex-row items-end justify-around'>
 
-                    <img 
-                        src='/src/assets/logo.png'
-                        alt='Logo'
-                        style={{ height: 35, width: 40 }}
-                        />
-                        <h1 className='text-md font-extrabold'>Mercado de proveedores</h1>
+                    {/*<img */}
+                    {/*    src='/src/assets/logo.png'*/}
+                    {/*    alt='Logo'*/}
+                    {/*    style={{ height: 35, width: 40 }}*/}
+                    {/*    />*/}
+                    {/*    <h1 className='text-md font-extrabold'>Mercado de proveedores</h1>*/}
                         </div>
                     {/* <SitemarkIcon /> */}
                     <Box
@@ -92,10 +87,28 @@ export function Checkout(props: { disableCustomTheme?: boolean }) {
                             flexDirection: 'column',
                             flexGrow: 1,
                             width: '100%',
-                            maxWidth: 500,
+                            maxWidth: 800,
                         }}
                     >
-                        <Info totalPrice={activeStep >= 2 ? '$144.97' : '$134.98'} />
+                        {/*<Info totalPrice={activeStep >= 2 ? '$144.97' : '$134.98'} />*/}
+                        <div className="lg:w-1/2 w-full dark:bg-black/90 lg:grid items-center hidden">
+                            <div className="relative items-center justify-center  flex z-1">
+                                <GridShape />
+                                <div className="flex flex-col items-center max-w-xs">
+                                    <a href='/' className="block mb-4">
+                                        <img
+                                            width={231}
+                                            height={48}
+                                            src="/src/assets/logo/BLANCO-COMPLETO.png"
+                                            alt="Logo"
+                                        />
+                                    </a>
+                                    <p className="text-center text-gray-400 dark:text-white/60">
+                                        Equipo de desarrollo | LOS DORPEPUS
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </Box>
                 </Grid>
                 <Grid
@@ -146,26 +159,26 @@ export function Checkout(props: { disableCustomTheme?: boolean }) {
                             </Stepper>
                         </Box>
                     </Box>
-                    <Card sx={{ display: { xs: 'flex', md: 'none' }, width: '100%' }}>
-                        <CardContent
-                            sx={{
-                                display: 'flex',
-                                width: '100%',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                            }}
-                        >
-                            <div>
-                                <Typography variant="subtitle2" gutterBottom>
-                                    Selected products
-                                </Typography>
-                                <Typography variant="body1">
-                                    {activeStep >= 2 ? '$144.97' : '$134.98'}
-                                </Typography>
-                            </div>
-                            <InfoMobile totalPrice={activeStep >= 2 ? '$144.97' : '$134.98'} />
-                        </CardContent>
-                    </Card>
+                    {/*<Card sx={{ display: { xs: 'flex', md: 'none' }, width: '100%' }}>*/}
+                    {/*    <CardContent*/}
+                    {/*        sx={{*/}
+                    {/*            display: 'flex',*/}
+                    {/*            width: '100%',*/}
+                    {/*            alignItems: 'center',*/}
+                    {/*            justifyContent: 'space-between',*/}
+                    {/*        }}*/}
+                    {/*    >*/}
+                    {/*        <div>*/}
+                    {/*            <Typography variant="subtitle2" gutterBottom>*/}
+                    {/*                Selected products*/}
+                    {/*            </Typography>*/}
+                    {/*            <Typography variant="body1">*/}
+                    {/*                {activeStep >= 2 ? '$144.97' : '$134.98'}*/}
+                    {/*            </Typography>*/}
+                    {/*        </div>*/}
+                    {/*        <InfoMobile totalPrice={activeStep >= 2 ? '$144.97' : '$134.98'} />*/}
+                    {/*    </CardContent>*/}
+                    {/*</Card>*/}
                     <Box
                         sx={{
                             display: 'flex',
