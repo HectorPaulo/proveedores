@@ -11,15 +11,20 @@ import ThemeTogglerTwo from "../../components/ThemeTogglerTwo/ThemeTogglerTwo.ts
 
 const Login: React.FC = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [loginError, setLoginError] = useState<string>('');
+    const [loading, setLoading] = useState(false);
 
     const validationSchema = Yup.object({
         email: Yup.string()
             .email("Ingresa un correo electrónico válido.")
             .required("El correo electrónico es obligatorio."),
         password: Yup.string()
-            .min(6, "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una minúscula y un caracter especial.")
+            .min(6, "La contraseña debe tener al menos 6 caracteres.")
             .required("La contraseña es obligatoria."),
     });
+
+    const { login, isAuthenticated } = useAuth();
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -28,13 +33,22 @@ const Login: React.FC = () => {
         },
         validationSchema,
         onSubmit: async (values) => {
-            await login(values.email, values.password);
+            setLoading(true);
+            setLoginError('');
+            
+            try {
+                const success = await login(values.email, values.password);
+                
+                if (!success) {
+                    setLoginError('Credenciales inválidas. Por favor verifica tu correo y contraseña.');
+                }
+            } catch (error) {
+                setLoginError('Error al iniciar sesión. Por favor intenta nuevamente.');
+            } finally {
+                setLoading(false);
+            }
         },
     });
-
-    // const [loading, setLoading] = useState(false);
-    const { login, isAuthenticated } = useAuth();
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -42,38 +56,10 @@ const Login: React.FC = () => {
         }
     }, [isAuthenticated, navigate]);
 
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const { name, value } = e.target;
-    //     setFormData(prev => ({
-    //         ...prev,
-    //         [name]: value
-    //     }));
-    //     setError('');
-    // };
-
-    // const handleSubmit = async (e: React.FormEvent) => {
-    //     e.preventDefault();
-    //     setLoading(true);
-    //     setError('');
-    //
-    //     try {
-    //         const success = await login(formData.email, formData.password);
-    //         if (success) {
-    //             navigate('/dashboard');
-    //         } else {
-    //             setError('Credenciales inválidas. Usa: admin@proveedores.com / admin123');
-    //         }
-    //     } catch {
-    //         setError('Error al iniciar sesión. Inténtalo de nuevo.');
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
-
     return (
         <div className="relative p-6 bg-white z-1 dark:bg-gray-900 sm:p-0">
             <button className="fixed top-6 left-6 z-50 hidden sm:block" onClick={() => navigate('/')}>
-                <ArrowBackIosNewRoundedIcon className="absolute top-6 left-6 cursor-pointer text-gray-300 dark:text-gray-100" onClick={() => navigate(-1)} />
+                <ArrowBackIosNewRoundedIcon className="absolute top-6 left-6 cursor-pointer text-gray-300 dark:text-gray-100" />
             </button>
                 <div className="relative flex lg:flex-row w-full h-screen flex-col sm:p-0">
                     <div className="flex flex-col flex-1 lg:w-1/2 w-full justify-start">
@@ -90,6 +76,11 @@ const Login: React.FC = () => {
                                 <div>
                                     <form onSubmit={formik.handleSubmit}>
                                         <div className="space-y-6">
+                                            {loginError && (
+                                                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                                                    {loginError}
+                                                </div>
+                                            )}
                                             <div className="flex flex-col space-y-2">
                                                 <label className="flex justify-start font-bold text-white text-lg">
                                                     Correo electrónico <span className="ml-2 text-red-500">*</span>{" "}
@@ -102,11 +93,12 @@ const Login: React.FC = () => {
                                                     value={formik.values.email}
                                                     onChange={formik.handleChange}
                                                     onBlur={formik.handleBlur}
-                                                    className="w-full  px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                    className="w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                                                     required
+                                                    disabled={loading}
                                                 />
                                                 {formik.touched.email && formik.errors.email && (
-                                                    <p className="text-sm text-error-500">
+                                                    <p className="text-sm text-red-500">
                                                         {formik.errors.email}
                                                     </p>
                                                 )}
@@ -124,9 +116,10 @@ const Login: React.FC = () => {
                                                         value={formik.values.password}
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
-                                                        className="w-full  px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                        className="w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                                                         required
                                                         autoComplete="current-password"
+                                                        disabled={loading}
                                                     />
                                                     <span
                                                         onClick={() => setShowPassword(!showPassword)}
@@ -140,14 +133,18 @@ const Login: React.FC = () => {
                                                     </span>
                                                 </div>
                                                 {formik.touched.password && formik.errors.password && (
-                                                    <p className="text-sm text-error-500">
+                                                    <p className="text-sm text-red-500">
                                                         {formik.errors.password}
                                                     </p>
                                                 )}
                                             </div>
                                             <div>
-                                                <button type="submit" className="cursor-pointer hover:scale-105 hover:animate-pulse border-gray-300 border-t-2 border-l-2 border-b-4 border-r-4 w-3/4 rounded-lg py-2 mt-8">
-                                                    Entrar
+                                                <button 
+                                                    type="submit" 
+                                                    className="cursor-pointer hover:scale-105 hover:animate-pulse border-gray-300 border-t-2 border-l-2 border-b-4 border-r-4 w-3/4 rounded-lg py-2 mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    disabled={loading}
+                                                >
+                                                    {loading ? 'Iniciando sesión...' : 'Entrar'}
                                                 </button>
                                             </div>
                                         </div>
