@@ -36,6 +36,27 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         return false;
     };
 
+    const register = async (name: string, email: string, _password: string): Promise<boolean> => {
+        // Simulación de registro - en producción harías una petición al backend
+        // Aqui aceptamos cualquier email que no esté exactamente como el admin de ejemplo
+        if (email === 'admin@proveedores.com') {
+            // Simulamos fallo si se intenta registrar con el email del admin
+            return false;
+        }
+
+        const userData: User = {
+            id: String(Date.now()),
+            name,
+            email
+        };
+
+        setIsAuthenticated(true);
+        setUser(userData);
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('user', JSON.stringify(userData));
+        return true;
+    };
+
     const logout = () => {
         setIsAuthenticated(false);
         setUser(null);
@@ -47,7 +68,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         isAuthenticated,
         user,
         login,
-        logout
+        logout,
+        register
     };
 
     return <AuthContextTypes.Provider value={value}>{children}</AuthContextTypes.Provider>;

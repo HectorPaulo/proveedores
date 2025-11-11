@@ -5,6 +5,7 @@ interface AuthContextType {
     user: User | null;
     login: (email: string, password: string) => Promise<boolean>;
     logout: () => void;
+    register?: (name: string, email: string, password: string) => Promise<boolean>; // add optional register
 }
 
 interface User {
