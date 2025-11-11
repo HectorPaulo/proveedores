@@ -12,6 +12,9 @@ import Providers from "./pages/Providers/Providers.tsx";
 import Favorites from "./pages/Favorites/Favorites.tsx";
 import ProductDetail from "./pages/ProductDetail/ProductDetail.tsx";
 import RegistroProveedor from "./pages/RegistroProveedor/RegistroProveedor.tsx";
+import Profile from "./pages/Profile/Profile.tsx";
+import Register from "./pages/Register/Register.tsx";
+import Security from "./pages/Security/Security.tsx";
 
 function App() {
   return (
@@ -23,6 +26,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/team" element={<Team />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route
             path="/private/dashboard"
             element={
@@ -60,6 +64,22 @@ function App() {
                 element={
                 <ProtectedRoute>
                     <RegistroProveedor />
+                </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/private/profile"
+                element={
+                <ProtectedRoute>
+                    <Profile />
+                </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/private/profile/security"
+                element={
+                <ProtectedRoute>
+                    <Security />
                 </ProtectedRoute>
                 }
             />

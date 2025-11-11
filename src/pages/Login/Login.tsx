@@ -147,6 +147,10 @@ const Login: React.FC = () => {
                                                     {loading ? 'Iniciando sesión...' : 'Entrar'}
                                                 </button>
                                             </div>
+                                            <p>O</p>
+                                                <a href='/register'>
+                                                    <p className="">Crear una cuenta</p>
+                                                </a>
                                         </div>
                                     </form>
                                 </div>
