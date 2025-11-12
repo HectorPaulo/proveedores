@@ -6,11 +6,11 @@ const Header = () => {
         const now = new Date();
         let message = '';
         if (now.getHours() < 12) {
-            message = `¡Buenos días, ${user?.name}!`
+            message = `¡Buenos días, ${user?.name || user?.fullName}!`
         } else if (now.getHours() < 18) {
-            message = `¡Buenas tardes ${user?.name}!`
+            message = `¡Buenas tardes ${user?.name || user?.fullName}!`
         } else {
-            message = `¡Buenas noches ${user?.name}, es hora de descansar!`
+            message = `¡Buenas noches ${user?.name || user?.fullName}, es hora de descansar!`
         }
 
         return message;

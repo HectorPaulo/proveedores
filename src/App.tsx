@@ -19,6 +19,7 @@ import AdminDashboard from "./pages/SysAdmin/Dashboard/AdminDashboard.tsx";
 import ProviderDashboard from "./pages/Provider/Dashboard/ProviderDashboard.tsx";
 import type {JSX} from "react";
 import Solicitudes from "./pages/SysAdmin/Solicitudes/Solicitudes.tsx";
+import EditProfile from "./pages/Profile/Edit/EditProfile.tsx";
 
 function App() {
   const RoleProtected = ({ children, allowedRoles }: { children: JSX.Element; allowedRoles?: string[] }) => {
@@ -88,8 +89,16 @@ function App() {
             <Route
                 path="/private/profile"
                 element={
-                <RoleProtected allowedRoles={['cliente']}>
+                <RoleProtected allowedRoles={['cliente', 'proveedor', 'admin']}>
                     <Profile />
+                </RoleProtected>
+                }
+            />
+            <Route
+                path="/private/profile/edit"
+                element={
+                <RoleProtected allowedRoles={['cliente', 'proveedor', 'admin']}>
+                    <EditProfile />
                 </RoleProtected>
                 }
             />

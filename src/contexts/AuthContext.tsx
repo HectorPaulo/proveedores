@@ -36,7 +36,13 @@ import { createContext, useState, useEffect, type ReactNode } from 'react';
 
       const logout = () => {
         setUser(null);
-        try { localStorage.removeItem('user'); } catch {}
+        try {
+            localStorage.removeItem('user');
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+        } catch (e) {
+            console.error("Hubo un error limpiando el localStorage durante el logout: ", e);
+        }
       };
 
       useEffect(() => {

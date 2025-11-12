@@ -44,14 +44,14 @@ const MenuBottomOptions = () => {
     ];
 
     return (
-        <div className="max-w-full max-h-auto grid grid-cols-2 gap-x-4 bottom-4 left-0 absolute ml-6">
+        <div className="max-w-full max-h-auto grid grid-cols-2 gap-x-4 bottom-4 left-0 absolute">
             <div className="flex flex-row space-x-5 items-center justify-start cursor-pointer" onClick={() => navigate('/private/profile')}>
                 <img
                     src="http://github.com/HectorPaulo.png"
                     alt={user?.name}
                     className="rounded-full w-12 h-12 object-cover"
                 />
-                <p className="text-sm font-semibold">{user?.name}</p>
+                <p className="text-sm font-semibold">{user?.name || user?.fullName}</p>
             </div>
             <div
                 ref={moreBtnRef}
