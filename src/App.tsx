@@ -57,7 +57,7 @@ function App() {
             <Route
                 path="/private/proveedores"
                 element={
-                    <RoleProtected allowedRoles={['cliente']}>
+                    <RoleProtected allowedRoles={['cliente', 'admin']}>
                         <Providers />
                     </RoleProtected>
                 }

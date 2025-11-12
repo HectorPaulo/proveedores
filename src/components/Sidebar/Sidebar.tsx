@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {type JSX, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import MenuBottomOptions from "./MenuBottomOptions/MenuBottomOptions.tsx";
 import Tooltip from '@mui/material/Tooltip';
@@ -6,16 +6,29 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import HailIcon from '@mui/icons-material/Hail';
+import {useAuth} from "../../hooks/useAuth.tsx";
+
+    type MenuOption = {
+        title: string;
+        icon: JSX.Element;
+        path: string;
+        tooltip: string;
+    };
 
 const Sidebar = () => {
     const [menuHidden, setMenuHidden] = useState(true);
     const navigate = useNavigate();
+    const { user } = useAuth();
 
-    const options = [
+
+    const options: MenuOption[] = user?.role === 'cliente' ? [
         { title: 'Inicio', icon: <HomeRoundedIcon />, path: '/private/dashboard', tooltip: 'Inicio' },
         { title: 'Proveedores', icon: <HailIcon />, path: '/private/proveedores', tooltip: 'Buscar proveedores' },
         { title: 'Favoritos', icon: <FavoriteRoundedIcon />, path: '/private/favorites', tooltip: 'Consultar favoritos' },
-    ]
+    ] : [
+        { title: 'Inicio', icon: <HomeRoundedIcon />, path: '/private/dashboard', tooltip: 'Inicio' },
+        { title: 'Proveedores', icon: <HailIcon />, path: '/private/proveedores', tooltip: 'Buscar proveedores' },
+    ];
 
     return (
         <aside className={`p-4 w-[200px] h-screen fixed top-0 left-0 bg-[#181818] border-r-[1px] border-gray-700 ${menuHidden ? 'translate-x-[-70%]' : 'translate-x-0'} transition-transform duration-300 ease-in-out z-50 p-0`}>
