@@ -1,6 +1,6 @@
-    import { createContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useState, useEffect, type ReactNode } from 'react';
 
-    type User = { token?: string; [key: string]: never } | null;
+    type User = { token?: string; role?: string; [key: string]: any } | null;
 
     interface AuthContextType {
       isAuthenticated: boolean;

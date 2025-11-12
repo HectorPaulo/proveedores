@@ -40,11 +40,15 @@ const Login: React.FC = () => {
 
             try {
                 const resp = await loginController.login(values.email, values.password);
-                // loginController puede devolver { data: user } o directamente user/token
                 const user = (resp && (resp as any).data) ? (resp as any).data : resp;
-                // Actualiza el contexto y localStorage vía el método login del AuthProvider
                 login(user);
-                navigate('/private/dashboard', { replace: true });
+                if (user.role === 'admin') {
+                    navigate('/admin/dashboard', { replace: true });
+                } else if (user.role === 'proveedor') {
+                    navigate('/proveedor/dashboard', { replace: true });
+                } else {
+                    navigate('/private/dashboard', { replace: true });
+                }
             } catch (err: unknown) {
                 const msg = err instanceof Error ? err.message : 'Error al iniciar sesión. Por favor intenta nuevamente.';
                 setLoginError(msg);

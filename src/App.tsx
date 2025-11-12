@@ -83,6 +83,22 @@ function App() {
                 </ProtectedRoute>
                 }
             />
+            <Route
+                path="/admin/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <div>Vista de Administrador</div>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/proveedor/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <div>Vista de Proveedor</div>
+                  </ProtectedRoute>
+                }
+              />
         </Routes>
       </Router>
     </AuthProvider>
