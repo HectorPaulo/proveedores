@@ -57,7 +57,7 @@ function App() {
             <Route
                 path="/private/proveedores"
                 element={
-                    <RoleProtected allowedRoles={['cliente', 'admin']}>
+                    <RoleProtected allowedRoles={['cliente', 'admin', 'proveedor']}>
                         <Providers />
                     </RoleProtected>
                 }
@@ -73,7 +73,7 @@ function App() {
             <Route
                 path={`/private/proveedores/:id/:nombre`}
                 element={
-                <RoleProtected allowedRoles={['cliente']}>
+                <RoleProtected allowedRoles={['cliente', 'admin', 'proveedor']}>
                     <ProductDetail />
                 </RoleProtected>
                 }
