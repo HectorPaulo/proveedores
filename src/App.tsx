@@ -1,7 +1,7 @@
 import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
-import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import { useAuth } from './hooks/useAuth';
 import Home from "./pages/Home/Home.tsx";
 import About from "./pages/About/About.tsx";
 import Contact from "./pages/Contact/Contact.tsx";
@@ -15,8 +15,26 @@ import RegistroProveedor from "./pages/RegistroProveedor/RegistroProveedor.tsx";
 import Profile from "./pages/Profile/Profile.tsx";
 import Register from "./pages/Register/Register.tsx";
 import Security from "./pages/Security/Security.tsx";
+import AdminDashboard from "./pages/SysAdmin/Dashboard/AdminDashboard.tsx";
+import ProviderDashboard from "./pages/Provider/Dashboard/ProviderDashboard.tsx";
+import type {JSX} from "react";
+import Solicitudes from "./pages/SysAdmin/Solicitudes/Solicitudes.tsx";
 
 function App() {
+  const RoleProtected = ({ children, allowedRoles }: { children: JSX.Element; allowedRoles?: string[] }) => {
+    const { isAuthenticated, user } = useAuth();
+    if (!isAuthenticated) return <Navigate to="/login" replace />;
+
+    if (allowedRoles && user?.role) {
+      if (!allowedRoles.includes(user.role)) {
+        if (user.role === 'admin') return <Navigate to="/admin/dashboard" replace />;
+        if (user.role === 'proveedor') return <Navigate to="/proveedor/dashboard" replace />;
+        return <Navigate to="/private/dashboard" replace />;
+      }
+    }
+    return children;
+  };
+
   return (
     <AuthProvider>
       <Router>
@@ -30,73 +48,81 @@ function App() {
           <Route
             path="/private/dashboard"
             element={
-              <ProtectedRoute>
+              <RoleProtected allowedRoles={['cliente']}>
                 <Dashboard />
-              </ProtectedRoute>
+              </RoleProtected>
             }
           />
             <Route
                 path="/private/proveedores"
                 element={
-                    <ProtectedRoute>
+                    <RoleProtected allowedRoles={['cliente']}>
                         <Providers />
-                    </ProtectedRoute>
+                    </RoleProtected>
                 }
             />
             <Route
                 path="/private/favorites"
                 element={
-                <ProtectedRoute>
+                <RoleProtected allowedRoles={['cliente']}>
                     <Favorites />
-                </ProtectedRoute>
+                </RoleProtected>
                 }
             />
             <Route
                 path={`/private/proveedores/:id/:nombre`}
                 element={
-                <ProtectedRoute>
+                <RoleProtected allowedRoles={['cliente']}>
                     <ProductDetail />
-                </ProtectedRoute>
+                </RoleProtected>
                 }
             />
             <Route
                 path="/private/registro-proveedor"
                 element={
-                <ProtectedRoute>
+                <RoleProtected allowedRoles={['cliente']}>
                     <RegistroProveedor />
-                </ProtectedRoute>
+                </RoleProtected>
                 }
             />
             <Route
                 path="/private/profile"
                 element={
-                <ProtectedRoute>
+                <RoleProtected allowedRoles={['cliente']}>
                     <Profile />
-                </ProtectedRoute>
+                </RoleProtected>
                 }
             />
             <Route
                 path="/private/profile/security"
                 element={
-                <ProtectedRoute>
+                <RoleProtected allowedRoles={['cliente']}>
                     <Security />
-                </ProtectedRoute>
+                </RoleProtected>
                 }
             />
             <Route
                 path="/admin/dashboard"
                 element={
-                  <ProtectedRoute>
-                    <div>Vista de Administrador</div>
-                  </ProtectedRoute>
+                  <RoleProtected allowedRoles={['admin']}>
+                      <AdminDashboard />
+                  </RoleProtected>
+                }
+              />
+            <Route
+                path="/admin/solicitudes"
+                element={
+                  <RoleProtected allowedRoles={['admin']}>
+                      <Solicitudes />
+                  </RoleProtected>
                 }
               />
               <Route
                 path="/proveedor/dashboard"
                 element={
-                  <ProtectedRoute>
-                    <div>Vista de Proveedor</div>
-                  </ProtectedRoute>
+                  <RoleProtected allowedRoles={['proveedor']}>
+                      <ProviderDashboard />
+                  </RoleProtected>
                 }
               />
         </Routes>

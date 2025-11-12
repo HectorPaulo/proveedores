@@ -19,7 +19,7 @@ const Login: React.FC = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [loginError, setLoginError] = useState<string>('');
     const [loading, setLoading] = useState(false);
-    const { isAuthenticated, login } = useAuth();
+    const { isAuthenticated, user, login } = useAuth();
 
     const validationSchema = Yup.object({
         email: Yup.string().email('Ingresa un correo electrónico válido.').required('El correo electrónico es obligatorio.'),
@@ -59,10 +59,16 @@ const Login: React.FC = () => {
     });
 
     useEffect(() => {
-        if (isAuthenticated) navigate('/private/dashboard', { replace: true });
-    }, [isAuthenticated, navigate]);
+        if (!isAuthenticated) return;
+        if (user?.role === 'admin') navigate('/admin/dashboard', { replace: true });
+        else if (user?.role === 'proveedor') navigate('/proveedor/dashboard', { replace: true });
+        else navigate('/private/dashboard', { replace: true });
+    }, [isAuthenticated, user, navigate]);
 
-    if (isAuthenticated) return <Navigate to="/private/dashboard" replace />;
+    if (isAuthenticated) {
+        const dest = user?.role === 'admin' ? '/admin/dashboard' : user?.role === 'proveedor' ? '/proveedor/dashboard' : '/private/dashboard';
+        return <Navigate to={dest} replace />;
+    }
 
     return (
         <div className="relative p-6 bg-white z-1 dark:bg-gray-900 sm:p-0">
@@ -168,3 +174,4 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
