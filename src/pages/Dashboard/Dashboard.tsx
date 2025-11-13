@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Header from "../../components/Header/Header.tsx";
 import Sidebar from "../../components/Sidebar/Sidebar.tsx";
-import Alert from '@mui/material/Alert';
-import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import {useNavigate} from "react-router-dom";
-import Box from "@mui/material/Box";
 
 const Dashboard: React.FC = () => {
     const navigate = useNavigate();
-    const [showProveedorAlert, setShowProveedorAlert] = useState(false);
 
     const handleProveedorClick = () => {
-        setShowProveedorAlert(true);
+        // Navegar al formulario de registro de proveedor
+        navigate('/private/registro-proveedor');
     };
 
     return (
@@ -127,29 +124,15 @@ const Dashboard: React.FC = () => {
                     <label className="text-4xl font-black">¿Eres un proveedor?</label>
                     <label>Únete a nuestra plataforma y conecta con miles de compradores potenciales</label>
                     <div className="flex flex-row justify-center">
-                        {!showProveedorAlert && (
                         <button
                             onClick={handleProveedorClick}
                             className="cursor-pointer hover:scale-105 rounded border px-4 py-2 mx-6 bg-amber-600 font-semibold"
                         >
                             Registrarme como proveedor
                         </button>
-                        )}
                         <button onClick={() => navigate('/private/favorites')} className="cursor-pointer hover:scale-105 rounded border px-4 py-2 mx-6 bg-gray-800 font-semibold">Ver mis favoritos</button>
                     </div>
-                    {showProveedorAlert && (
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 4, ml: 16, mr: 16 }}>
-                            <Alert
-                                severity="warning"
-                                icon={<CheckCircleRoundedIcon />}
-                                onClose={() => setShowProveedorAlert(false)}
-                            >
-                                La solicitud para registrarse como proveedor ha sido enviada exitosamente a un administrador y está en espera de ser aprobada.
-                            </Alert>
-                        </Box>
-                    )}
                 </div>
-
             </div>
         </div>
     );

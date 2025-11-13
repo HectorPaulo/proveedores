@@ -6,6 +6,7 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import HailIcon from '@mui/icons-material/Hail';
+import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
 import {useAuth} from "../../hooks/useAuth.tsx";
 
     type MenuOption = {
@@ -25,6 +26,10 @@ const Sidebar = () => {
         { title: 'Inicio', icon: <HomeRoundedIcon />, path: '/private/dashboard', tooltip: 'Inicio' },
         { title: 'Proveedores', icon: <HailIcon />, path: '/private/proveedores', tooltip: 'Buscar proveedores' },
         { title: 'Favoritos', icon: <FavoriteRoundedIcon />, path: '/private/favorites', tooltip: 'Consultar favoritos' },
+    ] : user?.role === 'proveedor' ? [
+        { title: 'Inicio', icon: <HomeRoundedIcon />, path: '/proveedor/dashboard', tooltip: 'Inicio' },
+        { title: 'Mis Productos', icon: <AddBoxRoundedIcon />, path: '/proveedor/productos', tooltip: 'Gestionar mis productos' },
+        { title: 'Proveedores', icon: <HailIcon />, path: '/private/proveedores', tooltip: 'Buscar proveedores' },
     ] : [
         { title: 'Inicio', icon: <HomeRoundedIcon />, path: '/private/dashboard', tooltip: 'Inicio' },
         { title: 'Proveedores', icon: <HailIcon />, path: '/private/proveedores', tooltip: 'Buscar proveedores' },

@@ -16,28 +16,154 @@ import StepLabel from '@mui/material/StepLabel';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import GridShape from "../../components/GridShape/GridShape.tsx";
+import { useNavigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '@mui/material/Alert';
 
 const steps = ['Información del proveedor', 'Información de productos', 'Detalles y preferencias'];
-function getStepContent(step: number) {
-    switch (step) {
-        case 0:
-            return <AddressForm />;
-        case 1:
-            return <PaymentForm />;
-        case 2:
-            return <Review />;
-        default:
-            throw new Error('Unknown step');
-    }
+
+interface ProviderFormData {
+    nombre: string;
+    email: string;
+    telefono: string;
+    ubicacion: string;
+    ciudad: string;
+    estado: string;
+    codigoPostal: string;
+    pais: string;
+    descripcion: string;
+    tipo: string;
+    compraMinima: string;
+    horario: string;
+    metodosPago: string[];
+    categoriasProductos: string;
 }
+
 export function Checkout(props: { disableCustomTheme?: boolean }) {
     const [activeStep, setActiveStep] = React.useState(0);
-    const handleNext = () => {
-        setActiveStep(activeStep + 1);
+    const [loading, setLoading] = React.useState(false);
+    const [error, setError] = React.useState<string | null>(null);
+    const navigate = useNavigate();
+
+    const [formData, setFormData] = React.useState<ProviderFormData>({
+        nombre: '',
+        email: '',
+        telefono: '',
+        ubicacion: '',
+        ciudad: '',
+        estado: '',
+        codigoPostal: '',
+        pais: '',
+        descripcion: '',
+        tipo: '',
+        compraMinima: '',
+        horario: '',
+        metodosPago: [],
+        categoriasProductos: '',
+    });
+
+    const handleFormChange = (field: string, value: string | string[]) => {
+        setFormData(prev => ({
+            ...prev,
+            [field]: value
+        }));
     };
+
+    const validateStep = (step: number): boolean => {
+        switch (step) {
+            case 0:
+                return !!(
+                    formData.nombre &&
+                    formData.email &&
+                    formData.telefono &&
+                    formData.ubicacion &&
+                    formData.ciudad &&
+                    formData.estado &&
+                    formData.codigoPostal &&
+                    formData.pais &&
+                    formData.descripcion
+                );
+            case 1:
+                return !!(
+                    formData.tipo &&
+                    formData.horario &&
+                    formData.metodosPago.length > 0 &&
+                    formData.categoriasProductos
+                );
+            case 2:
+                return true;
+            default:
+                return false;
+        }
+    };
+
+    const handleNext = async () => {
+        if (!validateStep(activeStep)) {
+            setError('Por favor completa todos los campos requeridos');
+            return;
+        }
+        
+        setError(null);
+
+        if (activeStep === steps.length - 1) {
+            await handleSubmit();
+        } else {
+            setActiveStep(activeStep + 1);
+        }
+    };
+
     const handleBack = () => {
         setActiveStep(activeStep - 1);
+        setError(null);
     };
+
+    const handleSubmit = async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            // Simulación del envío de datos (sin llamada real al backend)
+            await new Promise(resolve => setTimeout(resolve, 1500)); // Simula delay de red
+            
+            // Guardar en localStorage para simular persistencia
+            const solicitud = {
+                ...formData,
+                verificado: false,
+                calificacion: 0,
+                productos: [],
+                fechaSolicitud: new Date().toISOString(),
+                estado: 'pendiente'
+            };
+            
+            console.log('Solicitud de proveedor enviada (simulada):', solicitud);
+            
+            // Opcional: guardar en localStorage
+            const solicitudesGuardadas = JSON.parse(localStorage.getItem('providerRequests') || '[]');
+            solicitudesGuardadas.push(solicitud);
+            localStorage.setItem('providerRequests', JSON.stringify(solicitudesGuardadas));
+
+            setActiveStep(steps.length);
+        } catch (err) {
+            console.error('Error submitting provider request:', err);
+            setError('Error al enviar la solicitud. Por favor intenta de nuevo.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    function getStepContent(step: number) {
+        switch (step) {
+            case 0:
+                return <AddressForm formData={formData} onFormChange={handleFormChange} />;
+            case 1:
+                return <PaymentForm formData={formData} onFormChange={handleFormChange} />;
+            case 2:
+                return <Review formData={formData} />;
+            default:
+                throw new Error('Unknown step');
+        }
+    }
+
     return (
         <AppTheme {...props}>
             <CssBaseline enableColorScheme />
@@ -71,16 +197,6 @@ export function Checkout(props: { disableCustomTheme?: boolean }) {
                         gap: 0,
                     }}
                 >
-                    <div className='flex flex-row items-end justify-around'>
-
-                    {/*<img */}
-                    {/*    src='/src/assets/logo.png'*/}
-                    {/*    alt='Logo'*/}
-                    {/*    style={{ height: 35, width: 40 }}*/}
-                    {/*    />*/}
-                    {/*    <h1 className='text-md font-extrabold'>Mercado de proveedores</h1>*/}
-                        </div>
-                    {/* <SitemarkIcon /> */}
                     <Box
                         sx={{
                             display: 'flex',
@@ -90,7 +206,6 @@ export function Checkout(props: { disableCustomTheme?: boolean }) {
                             maxWidth: 800,
                         }}
                     >
-                        {/*<Info totalPrice={activeStep >= 2 ? '$144.97' : '$134.98'} />*/}
                         <div className="lg:w-1/2 w-full dark:bg-black/90 lg:grid items-center hidden">
                             <div className="relative items-center justify-center  flex z-1">
                                 <GridShape />
@@ -159,26 +274,6 @@ export function Checkout(props: { disableCustomTheme?: boolean }) {
                             </Stepper>
                         </Box>
                     </Box>
-                    {/*<Card sx={{ display: { xs: 'flex', md: 'none' }, width: '100%' }}>*/}
-                    {/*    <CardContent*/}
-                    {/*        sx={{*/}
-                    {/*            display: 'flex',*/}
-                    {/*            width: '100%',*/}
-                    {/*            alignItems: 'center',*/}
-                    {/*            justifyContent: 'space-between',*/}
-                    {/*        }}*/}
-                    {/*    >*/}
-                    {/*        <div>*/}
-                    {/*            <Typography variant="subtitle2" gutterBottom>*/}
-                    {/*                Selected products*/}
-                    {/*            </Typography>*/}
-                    {/*            <Typography variant="body1">*/}
-                    {/*                {activeStep >= 2 ? '$144.97' : '$134.98'}*/}
-                    {/*            </Typography>*/}
-                    {/*        </div>*/}
-                    {/*        <InfoMobile totalPrice={activeStep >= 2 ? '$144.97' : '$134.98'} />*/}
-                    {/*    </CardContent>*/}
-                    {/*</Card>*/}
                     <Box
                         sx={{
                             display: 'flex',
@@ -215,22 +310,27 @@ export function Checkout(props: { disableCustomTheme?: boolean }) {
                         </Stepper>
                         {activeStep === steps.length ? (
                             <Stack spacing={2} useFlexGap>
-                                <Typography variant="h1">📦</Typography>
-                                <Typography variant="h5">Thank you for your order!</Typography>
+                                <Typography variant="h1">✅</Typography>
+                                <Typography variant="h5">¡Solicitud enviada exitosamente!</Typography>
                                 <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                                    Your order number is
-                                    <strong>&nbsp;#140396</strong>. We have emailed your order
-                                    confirmation and will update you once its shipped.
+                                    Tu solicitud para registrarte como proveedor ha sido enviada a los administradores.
+                                    Te notificaremos por correo electrónico cuando sea aprobada.
                                 </Typography>
                                 <Button
                                     variant="contained"
+                                    onClick={() => navigate('/private/dashboard')}
                                     sx={{ alignSelf: 'start', width: { xs: '100%', sm: 'auto' } }}
                                 >
-                                    Go to my orders
+                                    Volver al dashboard
                                 </Button>
                             </Stack>
                         ) : (
                             <React.Fragment>
+                                {error && (
+                                    <Alert severity="error" onClose={() => setError(null)} sx={{ mb: 2 }}>
+                                        {error}
+                                    </Alert>
+                                )}
                                 {getStepContent(activeStep)}
                                 <Box
                                     sx={[
@@ -255,8 +355,9 @@ export function Checkout(props: { disableCustomTheme?: boolean }) {
                                             onClick={handleBack}
                                             variant="text"
                                             sx={{ display: { xs: 'none', sm: 'flex' } }}
+                                            disabled={loading}
                                         >
-                                            Previous
+                                            Anterior
                                         </Button>
                                     )}
                                     {activeStep !== 0 && (
@@ -266,17 +367,19 @@ export function Checkout(props: { disableCustomTheme?: boolean }) {
                                             variant="outlined"
                                             fullWidth
                                             sx={{ display: { xs: 'flex', sm: 'none' } }}
+                                            disabled={loading}
                                         >
-                                            Previous
+                                            Anterior
                                         </Button>
                                     )}
                                     <Button
                                         variant="contained"
-                                        endIcon={<ChevronRightRoundedIcon />}
+                                        endIcon={loading ? <CircularProgress size={20} /> : <ChevronRightRoundedIcon />}
                                         onClick={handleNext}
                                         sx={{ width: { xs: '100%', sm: 'fit-content' } }}
+                                        disabled={loading}
                                     >
-                                        {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                                        {activeStep === steps.length - 1 ? 'Enviar solicitud' : 'Siguiente'}
                                     </Button>
                                 </Box>
                             </React.Fragment>

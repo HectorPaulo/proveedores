@@ -17,6 +17,7 @@ import Register from "./pages/Register/Register.tsx";
 import Security from "./pages/Security/Security.tsx";
 import AdminDashboard from "./pages/SysAdmin/Dashboard/AdminDashboard.tsx";
 import ProviderDashboard from "./pages/Provider/Dashboard/ProviderDashboard.tsx";
+import ProviderProducts from "./pages/Provider/Products/ProviderProducts.tsx";
 import type {JSX} from "react";
 import Solicitudes from "./pages/SysAdmin/Solicitudes/Solicitudes.tsx";
 import EditProfile from "./pages/Profile/Edit/EditProfile.tsx";
@@ -131,6 +132,14 @@ function App() {
                 element={
                   <RoleProtected allowedRoles={['proveedor']}>
                       <ProviderDashboard />
+                  </RoleProtected>
+                }
+              />
+              <Route
+                path="/proveedor/productos"
+                element={
+                  <RoleProtected allowedRoles={['proveedor']}>
+                      <ProviderProducts />
                   </RoleProtected>
                 }
               />
